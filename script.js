@@ -103,6 +103,9 @@ function getRandomNumber(max){
     return Math.floor(Math.random()*max)+1;
 }
 
+// =====================
+// Mobile-safe PNG export
+// =====================
 function exportPNG() {
     const resultsDiv = document.getElementById("results");
     if (resultsDiv.innerHTML.trim() === "") {
@@ -113,20 +116,25 @@ function exportPNG() {
     const clone = resultsDiv.cloneNode(true);
     clone.querySelectorAll('.reroll-btn').forEach(el => el.remove());
 
+    // Force clone offscreen and static
     clone.style.position = "absolute";
     clone.style.left = "-9999px";
     clone.style.top = "0";
     clone.style.width = resultsDiv.offsetWidth + "px";
+    clone.style.pointerEvents = "none"; 
     document.body.appendChild(clone);
 
-    html2canvas(clone, {backgroundColor:"#0b0f1a", scale:2, useCORS:true}).then(canvas=>{
-        const link = document.createElement("a");
-        link.download = "dropfleet_mission.png";
-        link.href = canvas.toDataURL("image/png");
-        link.click();
-        document.body.removeChild(clone);
-    }).catch(err=>{
-        alert("PNG export failed: "+err);
-        document.body.removeChild(clone);
-    });
+    // small delay ensures buttons removed before html2canvas runs
+    setTimeout(() => {
+        html2canvas(clone, {backgroundColor:"#0b0f1a", scale:2, useCORS:true}).then(canvas=>{
+            const link = document.createElement("a");
+            link.download = "dropfleet_mission.png";
+            link.href = canvas.toDataURL("image/png");
+            link.click();
+            document.body.removeChild(clone);
+        }).catch(err=>{
+            alert("PNG export failed: "+err);
+            document.body.removeChild(clone);
+        });
+    }, 50);
 }
