@@ -20,13 +20,13 @@ let currentResults = {};
 let currentMode = "";
 
 // ================= BUTTON FUNCTIONS =================
-function rollCasual(){ currentMode="casual"; rollMission(4,false,true); }
-function rollComplete(){ currentMode="complete"; rollMission(6,false,true); }
-function rollCompetitive(){ currentMode="competitive"; rollMission(6,true,true); }
-function rollStandardScenario(){ currentMode="standard"; rollMission(6,false,false,true); }
+function rollCasual(){ currentMode="casual"; rollMission(4,false,false); }
+function rollComplete(){ currentMode="complete"; rollMission(6,false,false); }
+function rollCompetitive(){ currentMode="competitive"; rollMission(6,true,false); }
+function rollStandardScenario(){ currentMode="standard"; rollMission(6,false,true); }
 
 // ================= CORE ROLL FUNCTION =================
-function rollMission(maxRoll, competitiveMode=false, includeScenario=false, onlyScenario=false){
+function rollMission(maxRoll, competitiveMode=false, onlyScenario=false){
     const resultsDiv = document.getElementById("results");
     const diceDiv = document.getElementById("dice");
     resultsDiv.innerHTML = "";
@@ -45,8 +45,11 @@ function rollMission(maxRoll, competitiveMode=false, includeScenario=false, only
             clearInterval(interval);
 
             for(let category in data){
-                // Skip Scenario unless this is the "onlyScenario" button
-                if(category === "Scenario" && !includeScenario && !onlyScenario) continue;
+                // Only roll Scenario if this is the Standard Scenario button
+                if(category === "Scenario" && onlyScenario === false) continue;
+
+                // Skip everything else if this is Standard Scenario
+                if(category !== "Scenario" && onlyScenario === true) continue;
 
                 let roll;
                 if(category === "Approach Type" && competitiveMode){
