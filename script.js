@@ -1,4 +1,3 @@
-// ===== DATA =====
 const data = {
     Deployment: ["Line","Table Corners","Midboard","From Corners","Attacker Defender","Encirclement"],
     "Approach Type": ["Standoff","Close Enough","Column","Counterattack","Delayed Response","Home Fleet Disadvantage"],
@@ -8,7 +7,6 @@ const data = {
     Scenario: ["Take and Hold","Erupting Battlefront","Power Gate","Shack and Yaw","Orbital Support","Entrapment"]
 };
 
-// Rules PDF references
 const rulesPages = {
     Deployment: "Page 28 of Rules PDF",
     "Approach Type": "Page 30 of Rules PDF",
@@ -18,16 +16,13 @@ const rulesPages = {
     Scenario: "Page 35 of Rules PDF"
 };
 
-// Current mission state
 let currentResults = {};
 let currentMode = "";
 
-// ===== ROLL FUNCTIONS =====
 function rollCasual(){ currentMode="casual"; rollMission(4,false); }
 function rollComplete(){ currentMode="complete"; rollMission(6,false); }
 function rollCompetitive(){ currentMode="competitive"; rollMission(6,true); }
 
-// ===== CORE MISSION LOGIC =====
 function rollMission(maxRoll, competitiveMode){
     const resultsDiv = document.getElementById("results");
     const diceDiv = document.getElementById("dice");
@@ -71,16 +66,15 @@ function rollMission(maxRoll, competitiveMode){
     }, 80);
 }
 
-// ===== REROLL SINGLE CATEGORY =====
 function rerollCategory(category){
     const diceDiv = document.getElementById("dice");
-    let maxRoll, competitiveMode=false;
+    let maxRoll;
 
     switch(currentMode){
         case "casual": maxRoll=4; break;
         case "complete": maxRoll=6; break;
         case "competitive": maxRoll=6; 
-            if(category==="Approach Type"){ maxRoll=3; competitiveMode=true } 
+            if(category==="Approach Type"){ maxRoll=3 } 
             break;
     }
 
@@ -93,7 +87,6 @@ function rerollCategory(category){
     let newResult = data[category][newRoll-1];
     currentResults[category] = {roll:newRoll, result:newResult};
 
-    // Dice animation
     diceDiv.textContent = `🎲 ${newRoll}`;
     diceDiv.style.transform = `rotate(${Math.random()*360}deg) scale(${1 + Math.random()*0.3})`;
     setTimeout(()=>{
@@ -101,7 +94,6 @@ function rerollCategory(category){
         diceDiv.style.transform="scale(1) rotate(0deg)";
     }, 400);
 
-    // Update DOM
     const resultsDiv = document.getElementById("results");
     const ps = resultsDiv.getElementsByTagName("p");
     for(let p of ps){
@@ -113,12 +105,10 @@ function rerollCategory(category){
     }
 }
 
-// ===== RANDOM NUMBER FUNCTION =====
 function getRandomNumber(max){
     return Math.floor(Math.random()*max)+1;
 }
 
-// ===== PNG EXPORT =====
 function exportPNG() {
     const resultsDiv = document.getElementById("results");
     if (resultsDiv.innerHTML.trim() === "") {
