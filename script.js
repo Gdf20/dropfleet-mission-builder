@@ -53,10 +53,10 @@ function rollMission(maxRoll, competitiveMode){
                 currentResults[category] = {roll,result};
 
                 resultsDiv.innerHTML += `
-                    <p>
+                    <div class="result-row" id="row-${category}">
                         <span class="result-text"><strong>${category}:</strong> ${roll} - ${result} (${rulesPages[category]})</span>
-                        <button onclick="rerollCategory('${category}')">Reroll</button>
-                    </p>
+                        <button class="reroll-btn" onclick="rerollCategory('${category}')">Reroll</button>
+                    </div>
                 `;
             }
 
@@ -67,9 +67,7 @@ function rollMission(maxRoll, competitiveMode){
 }
 
 function rerollCategory(category){
-    const diceDiv = document.getElementById("dice");
     let maxRoll;
-
     switch(currentMode){
         case "casual": maxRoll=4; break;
         case "complete": maxRoll=6; break;
@@ -87,6 +85,7 @@ function rerollCategory(category){
     let newResult = data[category][newRoll-1];
     currentResults[category] = {roll:newRoll, result:newResult};
 
+    const diceDiv = document.getElementById("dice");
     diceDiv.textContent = `🎲 ${newRoll}`;
     diceDiv.style.transform = `rotate(${Math.random()*360}deg) scale(${1 + Math.random()*0.3})`;
     setTimeout(()=>{
@@ -94,14 +93,9 @@ function rerollCategory(category){
         diceDiv.style.transform="scale(1) rotate(0deg)";
     }, 400);
 
-    const resultsDiv = document.getElementById("results");
-    const ps = resultsDiv.getElementsByTagName("p");
-    for(let p of ps){
-        if(p.innerHTML.includes(category+":")){
-            p.innerHTML = `<span class="result-text"><strong>${category}:</strong> ${newRoll} - ${newResult} (${rulesPages[category]})</span>
-                           <button onclick="rerollCategory('${category}')">Reroll</button>`;
-            break;
-        }
+    const row = document.getElementById(`row-${category}`);
+    if(row){
+        row.querySelector('.result-text').textContent = `${category}: ${newRoll} - ${newResult} (${rulesPages[category]})`;
     }
 }
 
@@ -115,7 +109,11 @@ function exportPNG() {
         alert("Please roll a mission first!");
         return;
     }
-    html2canvas(resultsDiv, {
+
+    const clone = resultsDiv.cloneNode(true);
+    clone.querySelectorAll('.reroll-btn').forEach(el => el.remove());
+
+    html2canvas(clone, {
         backgroundColor: "#0b0f1a",
         scale: 2
     }).then(canvas => {
