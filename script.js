@@ -19,11 +19,14 @@ const rulesPages = {
 let currentResults = {};
 let currentMode = "";
 
-function rollCasual(){ currentMode="casual"; rollMission(4,false); }
-function rollComplete(){ currentMode="complete"; rollMission(6,false); }
-function rollCompetitive(){ currentMode="competitive"; rollMission(6,true); }
+// ================= BUTTON FUNCTIONS =================
+function rollCasual(){ currentMode="casual"; rollMission(4,false,true); }
+function rollComplete(){ currentMode="complete"; rollMission(6,false,true); }
+function rollCompetitive(){ currentMode="competitive"; rollMission(6,true,true); }
+function rollStandardScenario(){ currentMode="standard"; rollMission(6,false,false,true); }
 
-function rollMission(maxRoll, competitiveMode){
+// ================= CORE ROLL FUNCTION =================
+function rollMission(maxRoll, competitiveMode=false, includeScenario=false, onlyScenario=false){
     const resultsDiv = document.getElementById("results");
     const diceDiv = document.getElementById("dice");
     resultsDiv.innerHTML = "";
@@ -42,6 +45,9 @@ function rollMission(maxRoll, competitiveMode){
             clearInterval(interval);
 
             for(let category in data){
+                // Skip Scenario unless this is the "onlyScenario" button
+                if(category === "Scenario" && !includeScenario && !onlyScenario) continue;
+
                 let roll;
                 if(category === "Approach Type" && competitiveMode){
                     roll = getRandomNumber(3);
@@ -66,6 +72,7 @@ function rollMission(maxRoll, competitiveMode){
     }, 80);
 }
 
+// ================= REROLL =================
 function rerollCategory(category){
     let maxRoll;
     switch(currentMode){
@@ -74,6 +81,7 @@ function rerollCategory(category){
         case "competitive": maxRoll=6; 
             if(category==="Approach Type"){ maxRoll=3 } 
             break;
+        case "standard": maxRoll=6; break;
     }
 
     let possible = [];
@@ -99,13 +107,12 @@ function rerollCategory(category){
     }
 }
 
+// ================= UTIL =================
 function getRandomNumber(max){
     return Math.floor(Math.random()*max)+1;
 }
 
-// =====================
-// Mobile-safe PNG export
-// =====================
+// ================= PNG EXPORT =================
 function exportPNG() {
     const resultsDiv = document.getElementById("results");
     if (resultsDiv.innerHTML.trim() === "") {
@@ -116,7 +123,6 @@ function exportPNG() {
     const clone = resultsDiv.cloneNode(true);
     clone.querySelectorAll('.reroll-btn').forEach(el => el.remove());
 
-    // Force clone offscreen and static
     clone.style.position = "absolute";
     clone.style.left = "-9999px";
     clone.style.top = "0";
@@ -124,7 +130,6 @@ function exportPNG() {
     clone.style.pointerEvents = "none"; 
     document.body.appendChild(clone);
 
-    // small delay ensures buttons removed before html2canvas runs
     setTimeout(() => {
         html2canvas(clone, {backgroundColor:"#0b0f1a", scale:2, useCORS:true}).then(canvas=>{
             const link = document.createElement("a");
