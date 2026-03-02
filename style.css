@@ -79,12 +79,18 @@ button:hover {
     border-left: 5px solid #f5c542;
     border-radius: 8px;
     box-shadow: 0 2px 5px rgba(0,0,0,0.5);
-    transition: transform 0.15s ease;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 #results p:hover {
     transform: translateX(5px);
     background: #1a2233;
+}
+
+.result-text {
+    flex: 1;
 }
 
 /* ===== EXPORT BUTTON ===== */
@@ -110,5 +116,13 @@ button:hover {
     box-shadow: 0 0 15px #f5c542;
 }
 
-/* ===== OPTIONAL FONTS ===== */
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap');
+/* ===== RULES LINK ===== */
+#rules-link {
+    margin-top: 30px;
+    font-size: 14px;
+}
+
+#rules-link a {
+    color: #f5c542;
+    text-decoration: underline;
+}
