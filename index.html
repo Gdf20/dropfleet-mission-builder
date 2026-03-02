@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dropfleet Commander Mission Builder</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<h1>Dropfleet Commander Mission Builder</h1>
+
+<div class="button-container">
+    <button onclick="rollCasual()">Casual (1-4)</button>
+    <button onclick="rollComplete()">Complete (1-6)</button>
+    <button onclick="rollCompetitive()">Competitive (Approach 1-3 only)</button>
+</div>
+
+<div id="dice-container">
+    <div id="dice" class="dice">🎲</div>
+</div>
+
+<div class="export-container">
+    <button onclick="exportPNG()">Export Mission as PNG</button>
+</div>
+
+<div id="results"></div>
+
+<!-- Include html2canvas for PNG export -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,114 @@
+/* ===== BODY & GENERAL ===== */
+body {
+    margin: 0;
+    font-family: 'Orbitron', Arial, sans-serif;
+    background: radial-gradient(circle at 50% 0%, #0b0f1a, #05070d);
+    color: #f0f0f0;
+    text-align: center;
+    padding: 20px;
+}
+
+/* ===== TITLE ===== */
+h1 {
+    color: #f5c542;
+    font-size: 2em;
+    text-shadow: 2px 2px #000;
+    margin-bottom: 30px;
+}
+
+/* ===== BUTTONS ===== */
+.button-container {
+    margin-bottom: 25px;
+}
+
+button {
+    background: linear-gradient(145deg, #1f2633, #0c101a);
+    border: 2px solid #f5c542;
+    border-radius: 10px;
+    padding: 12px 22px;
+    margin: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    color: #f5c542;
+    transition: all 0.2s ease;
+}
+
+button:hover {
+    background: #f5c542;
+    color: #000;
+    transform: translateY(-2px);
+    box-shadow: 0 0 15px #f5c542;
+}
+
+/* ===== DICE ===== */
+#dice-container {
+    margin: 20px 0;
+    height: 60px;
+}
+
+.dice {
+    font-size: 50px;
+    transition: transform 0.3s ease;
+    display: inline-block;
+}
+
+/* Dice rolling keyframes */
+@keyframes rollDice {
+    0% { transform: rotate(0deg) scale(1); }
+    25% { transform: rotate(90deg) scale(1.2); }
+    50% { transform: rotate(180deg) scale(0.9); }
+    75% { transform: rotate(270deg) scale(1.1); }
+    100% { transform: rotate(360deg) scale(1); }
+}
+
+/* ===== RESULTS AREA ===== */
+#results {
+    margin-top: 30px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 18px;
+    text-align: left;
+}
+
+/* ===== EACH RESULT CARD ===== */
+#results p {
+    background: #111622;
+    padding: 12px;
+    margin-bottom: 10px;
+    border-left: 5px solid #f5c542;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+    transition: transform 0.15s ease;
+}
+
+#results p:hover {
+    transform: translateX(5px);
+    background: #1a2233;
+}
+
+/* ===== EXPORT BUTTON ===== */
+.export-container {
+    margin: 15px 0;
+}
+
+.export-container button {
+    background: linear-gradient(145deg, #1f2633, #0c101a);
+    border: 2px solid #f5c542;
+    border-radius: 10px;
+    padding: 10px 20px;
+    cursor: pointer;
+    color: #f5c542;
+    font-weight: bold;
+    transition: all 0.2s ease;
+}
+
+.export-container button:hover {
+    background: #f5c542;
+    color: #000;
+    transform: translateY(-2px);
+    box-shadow: 0 0 15px #f5c542;
+}
+
+/* ===== OPTIONAL FONTS ===== */
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap');
