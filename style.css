@@ -1,3 +1,4 @@
+/* ===== BODY & GENERAL ===== */
 body {
     margin: 0;
     font-family: 'Orbitron', Arial, sans-serif;
@@ -7,6 +8,7 @@ body {
     padding: 20px;
 }
 
+/* ===== TITLE ===== */
 h1 {
     color: #f5c542;
     font-size: 2em;
@@ -14,6 +16,7 @@ h1 {
     margin-bottom: 30px;
 }
 
+/* ===== BUTTONS ===== */
 .button-container {
     margin-bottom: 25px;
 }
@@ -37,6 +40,7 @@ button:hover {
     box-shadow: 0 0 15px #f5c542;
 }
 
+/* ===== DICE ===== */
 #dice-container {
     margin: 20px 0;
     height: 60px;
@@ -48,14 +52,7 @@ button:hover {
     display: inline-block;
 }
 
-@keyframes rollDice {
-    0% { transform: rotate(0deg) scale(1); }
-    25% { transform: rotate(90deg) scale(1.2); }
-    50% { transform: rotate(180deg) scale(0.9); }
-    75% { transform: rotate(270deg) scale(1.1); }
-    100% { transform: rotate(360deg) scale(1); }
-}
-
+/* ===== RESULTS AREA ===== */
 #results {
     margin-top: 30px;
     max-width: 600px;
@@ -65,6 +62,7 @@ button:hover {
     text-align: left;
 }
 
+/* ===== EACH RESULT CARD ===== */
 #results p {
     background: #111622;
     padding: 12px;
@@ -73,8 +71,9 @@ button:hover {
     border-radius: 8px;
     box-shadow: 0 2px 5px rgba(0,0,0,0.5);
     display: flex;
-    justify-content: space-between;
+    justify-content: space-between; /* fixes desktop button */
     align-items: center;
+    flex-wrap: nowrap; /* prevent wrapping on desktop */
 }
 
 #results p:hover {
@@ -86,6 +85,16 @@ button:hover {
     flex: 1;
 }
 
+/* Reroll button style */
+#results p button {
+    flex: 0 0 auto; /* keep size */
+    margin-left: 10px;
+    display: inline-block;
+    font-size: 14px;
+    padding: 6px 12px;
+}
+
+/* ===== EXPORT BUTTON ===== */
 .export-container {
     margin: 15px 0;
 }
@@ -108,6 +117,7 @@ button:hover {
     box-shadow: 0 0 15px #f5c542;
 }
 
+/* ===== RULES LINK ===== */
 #rules-link {
     margin-top: 30px;
     font-size: 14px;
@@ -126,6 +136,6 @@ button:hover {
     #dice-container { height: 50px; }
     .dice { font-size: 40px; }
     #results p { flex-direction: column; align-items: flex-start; font-size: 16px; padding: 10px; }
-    #results p button { margin-top: 5px; align-self: flex-end; width: 100%; max-width: 150px; font-size: 14px; padding: 6px 0; }
+    #results p button { width: 100%; max-width: 150px; margin-top: 5px; }
     #rules-link { font-size: 12px; }
 }
