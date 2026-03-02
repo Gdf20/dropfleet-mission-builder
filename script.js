@@ -54,10 +54,8 @@ function rollMission(maxRoll, competitiveMode){
 
                 resultsDiv.innerHTML += `
                     <p>
-                        <div class="result-text"><strong>${category}:</strong> ${roll} - ${result} (${rulesPages[category]})</div>
-                        <div class="reroll-btn">
-                            <button onclick="rerollCategory('${category}')">Reroll</button>
-                        </div>
+                        <span class="result-text"><strong>${category}:</strong> ${roll} - ${result} (${rulesPages[category]})</span>
+                        <button class="reroll-btn" onclick="rerollCategory('${category}')">Reroll</button>
                     </p>
                 `;
             }
@@ -100,8 +98,8 @@ function rerollCategory(category){
     const ps = resultsDiv.getElementsByTagName("p");
     for(let p of ps){
         if(p.innerHTML.includes(category+":")){
-            p.innerHTML = `<div class="result-text"><strong>${category}:</strong> ${newRoll} - ${newResult} (${rulesPages[category]})</div>
-                           <div class="reroll-btn"><button onclick="rerollCategory('${category}')">Reroll</button></div>`;
+            p.innerHTML = `<span class="result-text"><strong>${category}:</strong> ${newRoll} - ${newResult} (${rulesPages[category]})</span>
+                           <button class="reroll-btn" onclick="rerollCategory('${category}')">Reroll</button>`;
             break;
         }
     }

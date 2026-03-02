@@ -68,7 +68,7 @@ button:hover {
     border-left: 5px solid #f5c542;
     border-radius: 8px;
     box-shadow: 0 2px 5px rgba(0,0,0,0.5);
-    
+
     display: flex;
     justify-content: space-between; /* text left, button right */
     align-items: center;
@@ -81,12 +81,14 @@ button:hover {
 }
 
 .result-text {
-    flex: 1 1 auto; /* text can shrink if needed */
+    flex: 1 1 auto; /* text can shrink */
+    word-break: break-word; /* prevent overflow */
 }
 
 .reroll-btn {
     flex: 0 0 auto; /* button keeps size */
     margin-left: 10px;
+    display: inline-block;
 }
 
 /* ===== EXPORT BUTTON ===== */
