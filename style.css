@@ -8,7 +8,6 @@ body {
     padding: 20px;
 }
 
-/* ===== TITLE ===== */
 h1 {
     color: #f5c542;
     font-size: 2em;
@@ -16,7 +15,6 @@ h1 {
     margin-bottom: 30px;
 }
 
-/* ===== BUTTONS ===== */
 .button-container {
     margin-bottom: 25px;
 }
@@ -70,8 +68,9 @@ button:hover {
     border-left: 5px solid #f5c542;
     border-radius: 8px;
     box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+    
     display: flex;
-    justify-content: space-between; /* fixes desktop button */
+    justify-content: space-between; /* text left, button right */
     align-items: center;
     flex-wrap: nowrap; /* prevent wrapping on desktop */
 }
@@ -82,16 +81,12 @@ button:hover {
 }
 
 .result-text {
-    flex: 1;
+    flex: 1 1 auto; /* text can shrink if needed */
 }
 
-/* Reroll button style */
-#results p button {
-    flex: 0 0 auto; /* keep size */
+.reroll-btn {
+    flex: 0 0 auto; /* button keeps size */
     margin-left: 10px;
-    display: inline-block;
-    font-size: 14px;
-    padding: 6px 12px;
 }
 
 /* ===== EXPORT BUTTON ===== */
@@ -136,6 +131,6 @@ button:hover {
     #dice-container { height: 50px; }
     .dice { font-size: 40px; }
     #results p { flex-direction: column; align-items: flex-start; font-size: 16px; padding: 10px; }
-    #results p button { width: 100%; max-width: 150px; margin-top: 5px; }
+    .reroll-btn { width: 100%; margin-top: 5px; }
     #rules-link { font-size: 12px; }
 }

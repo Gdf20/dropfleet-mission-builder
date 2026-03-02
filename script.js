@@ -54,8 +54,10 @@ function rollMission(maxRoll, competitiveMode){
 
                 resultsDiv.innerHTML += `
                     <p>
-                        <span class="result-text"><strong>${category}:</strong> ${roll} - ${result} (${rulesPages[category]})</span>
-                        <button onclick="rerollCategory('${category}')">Reroll</button>
+                        <div class="result-text"><strong>${category}:</strong> ${roll} - ${result} (${rulesPages[category]})</div>
+                        <div class="reroll-btn">
+                            <button onclick="rerollCategory('${category}')">Reroll</button>
+                        </div>
                     </p>
                 `;
             }
@@ -98,8 +100,8 @@ function rerollCategory(category){
     const ps = resultsDiv.getElementsByTagName("p");
     for(let p of ps){
         if(p.innerHTML.includes(category+":")){
-            p.innerHTML = `<span class="result-text"><strong>${category}:</strong> ${newRoll} - ${newResult} (${rulesPages[category]})</span>
-                           <button onclick="rerollCategory('${category}')">Reroll</button>`;
+            p.innerHTML = `<div class="result-text"><strong>${category}:</strong> ${newRoll} - ${newResult} (${rulesPages[category]})</div>
+                           <div class="reroll-btn"><button onclick="rerollCategory('${category}')">Reroll</button></div>`;
             break;
         }
     }
@@ -115,7 +117,12 @@ function exportPNG() {
         alert("Please roll a mission first!");
         return;
     }
-    html2canvas(resultsDiv, {
+
+    // Clone resultsDiv and remove reroll buttons for PNG
+    const clone = resultsDiv.cloneNode(true);
+    clone.querySelectorAll('.reroll-btn').forEach(el => el.remove());
+
+    html2canvas(clone, {
         backgroundColor: "#0b0f1a",
         scale: 2
     }).then(canvas => {
