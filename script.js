@@ -113,13 +113,20 @@ function exportPNG() {
     const clone = resultsDiv.cloneNode(true);
     clone.querySelectorAll('.reroll-btn').forEach(el => el.remove());
 
-    html2canvas(clone, {
-        backgroundColor: "#0b0f1a",
-        scale: 2
-    }).then(canvas => {
+    clone.style.position = "absolute";
+    clone.style.left = "-9999px";
+    clone.style.top = "0";
+    clone.style.width = resultsDiv.offsetWidth + "px";
+    document.body.appendChild(clone);
+
+    html2canvas(clone, {backgroundColor:"#0b0f1a", scale:2, useCORS:true}).then(canvas=>{
         const link = document.createElement("a");
         link.download = "dropfleet_mission.png";
         link.href = canvas.toDataURL("image/png");
         link.click();
+        document.body.removeChild(clone);
+    }).catch(err=>{
+        alert("PNG export failed: "+err);
+        document.body.removeChild(clone);
     });
 }
