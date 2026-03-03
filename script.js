@@ -66,37 +66,40 @@ function rollMission(mode) {
   currentRolls = {};
   const results = document.getElementById("results");
 
+  let content = "";
+
   if(mode==="standard") {
     const s = rollCategory("Scenario", scenarios, scenarios.length);
-    results.innerHTML = `<div class="category-card scenario dice-roll" data-name="Scenario">
+    content += `<div class="category-card scenario dice-roll" data-name="Scenario">
       <div class="category-text"><strong>Scenario:</strong> ${s.num} - ${s.value}</div>
       <button class="reroll-btn" onclick="rerollCategory('Scenario')">Reroll</button>
     </div>`;
-    return;
+  } else {
+    let depMax=deployments.length, appMax=approaches.length, layMax=layouts.length,
+        varMax=variants.length, objMax=objectives.length;
+
+    if(mode==="casual"){ depMax=appMax=layMax=varMax=objMax=4; }
+    if(mode==="narrative"){ depMax=appMax=layMax=varMax=objMax=6; }
+    if(mode==="competitive"){ depMax=4; layMax=3; appMax=6; varMax=6; objMax=6; }
+
+    const categories = [
+      {name:"Deployment", array:deployments, max:depMax, css:"deployment"},
+      {name:"Approach Type", array:approaches, max:appMax, css:"approach"},
+      {name:"Layout", array:layouts, max:layMax, css:"layout"},
+      {name:"Variant", array:variants, max:varMax, css:"variant"},
+      {name:"Objective", array:objectives, max:objMax, css:"objective"},
+    ];
+
+    categories.forEach(c=>{
+      const roll = rollCategory(c.name, c.array, c.max);
+      content += `<div class="category-card ${c.css} dice-roll" data-name="${c.name}">
+        <div class="category-text"><strong>${c.name}:</strong> ${roll.num} - ${roll.value}</div>
+        <button class="reroll-btn" onclick="rerollCategory('${c.name}')">Reroll</button>
+      </div>`;
+    });
   }
 
-  let depMax=deployments.length, appMax=approaches.length, layMax=layouts.length,
-      varMax=variants.length, objMax=objectives.length;
-
-  if(mode==="casual"){ depMax=appMax=layMax=varMax=objMax=4; }
-  if(mode==="narrative"){ depMax=appMax=layMax=varMax=objMax=6; }
-  if(mode==="competitive"){ depMax=4; layMax=3; appMax=6; varMax=6; objMax=6; }
-
-  const categories = [
-    {name:"Deployment", array:deployments, max:depMax, css:"deployment"},
-    {name:"Approach Type", array:approaches, max:appMax, css:"approach"},
-    {name:"Layout", array:layouts, max:layMax, css:"layout"},
-    {name:"Variant", array:variants, max:varMax, css:"variant"},
-    {name:"Objective", array:objectives, max:objMax, css:"objective"},
-  ];
-
-  results.innerHTML = categories.map(c=>{
-    const roll = rollCategory(c.name, c.array, c.max);
-    return `<div class="category-card ${c.css} dice-roll" data-name="${c.name}">
-      <div class="category-text"><strong>${c.name}:</strong> ${roll.num} - ${roll.value}</div>
-      <button class="reroll-btn" onclick="rerollCategory('${c.name}')">Reroll</button>
-    </div>`;
-  }).join("");
+  results.innerHTML = content;
 }
 
 // ------------------- Reroll Single Category -------------------
@@ -127,19 +130,26 @@ function rerollCategory(name) {
 
 // ------------------- Copy Mission -------------------
 function copyMission() {
-  const results = document.getElementById("results").innerText.trim();
+  const resultsDiv = document.getElementById("results");
+  const cards = resultsDiv.querySelectorAll(".category-card");
   const players = document.getElementById("playerResults").innerText.trim();
-  const textToCopy = players + (players ? "\n" : "") + results;
-  navigator.clipboard.writeText(textToCopy);
+  
+  let textToCopy = players ? players + "\n" : "";
+  cards.forEach(c=>{
+    const text = c.querySelector(".category-text").innerText;
+    textToCopy += text + "\n";
+  });
+
+  navigator.clipboard.writeText(textToCopy.trim());
   alert("Mission copied!");
 }
 
 // ------------------- Export to PNG -------------------
 function exportPNG() {
-  const cards = document.querySelectorAll(".category-card");
+  const exportArea = document.getElementById("exportArea");
+  const cards = exportArea.querySelectorAll(".category-card");
   cards.forEach(c=>c.classList.remove("dice-roll")); // pause animation
 
-  const exportArea = document.getElementById("exportArea");
   exportArea.style.width = exportArea.scrollWidth + "px";
   exportArea.style.height = exportArea.scrollHeight + "px";
 
@@ -148,6 +158,7 @@ function exportPNG() {
     link.download="mission.png";
     link.href=canvas.toDataURL();
     link.click();
+
     cards.forEach(c=>c.classList.add("dice-roll")); // restore animation
     exportArea.style.width = "";
     exportArea.style.height = "";
