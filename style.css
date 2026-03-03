@@ -7,7 +7,6 @@ body {
   overflow-x:hidden;
 }
 
-/* Starfield */
 .stars {
   position:fixed;
   width:100%;
@@ -24,15 +23,9 @@ body {
   to { background-position:0 1000px; }
 }
 
-.container {
-  max-width:900px;
-  margin:auto;
-  padding:20px;
-}
+.container { max-width:900px; margin:auto; padding:20px; }
 
-.button-row, .utility-row {
-  margin-top:15px;
-}
+.button-row, .utility-row { margin-top:15px; }
 
 button {
   margin:8px;
@@ -44,23 +37,19 @@ button {
   transition:all 0.3s ease;
 }
 
-button:hover {
-  transform:scale(1.05);
-}
+button:hover { transform:scale(1.05); }
+button:disabled { opacity:0.5; cursor:not-allowed; }
 
-/* Mode Buttons */
 .btn-casual { background:#3a6ea5; color:white; }
 .btn-narrative { background:#7a4fa3; color:white; }
 .btn-competitive { background:#b03a2e; color:white; }
 .btn-standard { background:#2e8b57; color:white; }
 
-/* Badge */
 .mode-badge {
   display:inline-block;
   padding:6px 16px;
   border-radius:20px;
-  margin-top:5px;
-  margin-bottom:10px;
+  margin:10px 0;
   transition:all 0.4s ease;
 }
 
@@ -69,7 +58,28 @@ button:hover {
 .badge-competitive { background:#b03a2e; box-shadow:0 0 12px #b03a2e; }
 .badge-standard { background:#2e8b57; box-shadow:0 0 12px #2e8b57; }
 
-/* Results Box */
+.player-section {
+  margin-top:20px;
+  padding:15px;
+  background:#111;
+  border-radius:8px;
+}
+
+.player-section input {
+  margin:5px;
+  padding:8px;
+  border-radius:4px;
+  border:none;
+}
+
+.player-results {
+  margin-top:10px;
+  font-size:16px;
+}
+
+.red-player { color:#ff4c4c; font-weight:bold; }
+.blue-player { color:#4ca6ff; font-weight:bold; }
+
 .results {
   margin-top:20px;
   padding:20px;
@@ -78,10 +88,24 @@ button:hover {
   transition:all 0.3s ease;
 }
 
-/* Dice animation */
-.roll-animation {
-  animation:shake 0.5s;
+.category-card {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:10px;
+  margin:6px 0;
+  border-radius:6px;
+  background:#222;
+  border-left:5px solid #888;
+  animation:shake 0.3s;
 }
+
+.category-card.deployment { border-left-color:#3a6ea5; }
+.category-card.approach { border-left-color:#7a4fa3; }
+.category-card.layout { border-left-color:#b03a2e; }
+.category-card.variant { border-left-color:#2e8b57; }
+.category-card.objective { border-left-color:#d19a2b; }
+.category-card.scenario { border-left-color:#4ca6ff; }
 
 @keyframes shake {
   0% { transform:rotate(0deg); }
