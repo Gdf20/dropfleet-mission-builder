@@ -144,23 +144,19 @@ function copyMission() {
   alert("Mission copied!");
 }
 
-// ------------------- Export to PNG -------------------
+// ------------------- Export to PNG (Full Page) -------------------
 function exportPNG() {
-  const exportArea = document.getElementById("exportArea");
-  const cards = exportArea.querySelectorAll(".category-card");
-  cards.forEach(c=>c.classList.remove("dice-roll")); // pause animation
+  // Temporarily remove dice-roll animations
+  const cards = document.querySelectorAll(".category-card");
+  cards.forEach(c=>c.classList.remove("dice-roll"));
 
-  exportArea.style.width = exportArea.scrollWidth + "px";
-  exportArea.style.height = exportArea.scrollHeight + "px";
-
-  html2canvas(exportArea).then(canvas=>{
-    const link=document.createElement("a");
-    link.download="mission.png";
-    link.href=canvas.toDataURL();
+  html2canvas(document.body, {scale:0.6}).then(canvas=>{
+    const link = document.createElement("a");
+    link.download = "mission.png";
+    link.href = canvas.toDataURL();
     link.click();
 
-    cards.forEach(c=>c.classList.add("dice-roll")); // restore animation
-    exportArea.style.width = "";
-    exportArea.style.height = "";
+    // Restore animations
+    cards.forEach(c=>c.classList.add("dice-roll"));
   });
 }
