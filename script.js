@@ -144,19 +144,32 @@ function copyMission() {
   alert("Mission copied!");
 }
 
-// ------------------- Export to PNG (Full Page) -------------------
+// ------------------- Export to PNG (Fixed) -------------------
 function exportPNG() {
-  // Temporarily remove dice-roll animations
-  const cards = document.querySelectorAll(".category-card");
-  cards.forEach(c=>c.classList.remove("dice-roll"));
+  const missionBoard = document.getElementById("missionBoard");
 
-  html2canvas(document.body, {scale:0.6}).then(canvas=>{
+  // Temporarily remove dice-roll animation
+  const cards = missionBoard.querySelectorAll(".category-card");
+  cards.forEach(c => c.classList.remove("dice-roll"));
+
+  // Fix width for consistent export
+  missionBoard.style.width = "700px";
+  missionBoard.style.padding = "20px";
+  missionBoard.style.boxSizing = "border-box";
+
+  html2canvas(missionBoard, {
+    scale: 0.7, // scale down for smaller PNG
+    useCORS: true,
+    allowTaint: true
+  }).then(canvas => {
     const link = document.createElement("a");
     link.download = "mission.png";
-    link.href = canvas.toDataURL();
+    link.href = canvas.toDataURL("image/png");
     link.click();
 
-    // Restore animations
-    cards.forEach(c=>c.classList.add("dice-roll"));
+    // Restore dice-roll animation
+    cards.forEach(c => c.classList.add("dice-roll"));
+    missionBoard.style.width = "";
+    missionBoard.style.padding = "";
   });
 }
