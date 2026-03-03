@@ -1,15 +1,15 @@
 /* Body & background */
 body {
   font-family: 'Orbitron', sans-serif, Arial, sans-serif;
-  background: #0b0b0f url('starfield.png') repeat;
-  color: #eee;
+  background: #0b1f3f url('starfield.png') repeat;
+  color: #fff;
   margin: 0; padding: 0;
   display: flex; flex-direction: column; align-items: center;
 }
 
 /* Header */
 .header { text-align: center; margin: 20px; }
-.header h1 { font-size: 32px; text-shadow: 0 0 10px #0ff, 0 0 20px #0ff; }
+.header h1 { font-size: 32px; text-shadow: 0 0 10px #ffe966; }
 
 /* Mode badge */
 .mode-badge {
@@ -17,93 +17,66 @@ body {
   border-radius: 8px; font-weight: bold;
   margin-top: 10px;
   transition: all 0.5s ease;
-  box-shadow: 0 0 15px #0ff;
-  text-transform: uppercase;
-  letter-spacing: 1px;
+  text-transform: uppercase; letter-spacing: 1px;
 }
-.badge-casual { background:#1a5a7a; box-shadow:0 0 15px #1a5a7a; }
-.badge-narrative { background:#2a7a2a; box-shadow:0 0 15px #2a7a2a; }
-.badge-competitive { background:#aa2a2a; box-shadow:0 0 15px #aa2a2a; }
-.badge-standard { background:#aa7a2a; box-shadow:0 0 15px #aa7a2a; }
+.badge-casual { background:#0055aa; box-shadow:0 0 15px #ffe966; color:#ffe966;}
+.badge-narrative { background:#0077cc; box-shadow:0 0 15px #ffe966; color:#ffe966;}
+.badge-competitive { background:#003366; box-shadow:0 0 15px #ffe966; color:#ffe966;}
+.badge-standard { background:#005588; box-shadow:0 0 15px #ffe966; color:#ffe966;}
 
 /* Player setup */
-.player-setup { 
-  margin: 20px; display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; 
-}
-.player-setup input { padding: 6px 10px; width: 150px; border-radius: 6px; border: 1px solid #555; background:#111; color:#eee; }
-.player-setup button { padding: 8px 14px; cursor: pointer; border-radius: 6px; background:#222; color:#0ff; border:1px solid #0ff; transition:0.3s; }
-.player-setup button:hover { background:#0ff; color:#111; }
+.player-setup { margin:20px; display:flex; flex-wrap:wrap; gap:12px; justify-content:center; }
+.player-setup input { padding:6px 10px; width:150px; border-radius:6px; border:1px solid #ffe966; background:#002244; color:#ffe966;}
+.player-setup button { padding:8px 14px; cursor:pointer; border-radius:6px; background:#004488; color:#ffe966; border:1px solid #ffe966; }
+.player-setup button:hover { background:#ffe966; color:#003366; }
 
 /* Mode buttons */
-.mode-buttons { margin: 20px; display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; }
-.mode-buttons button { padding: 10px 16px; cursor: pointer; border-radius: 6px; border:1px solid #0ff; background:#111; color:#0ff; font-weight:bold; transition:0.3s; }
-.mode-buttons button:hover { background:#0ff; color:#111; }
+.mode-buttons { margin: 20px; display:flex; flex-wrap:wrap; gap:12px; justify-content:center; }
+.mode-buttons button { padding:10px 16px; cursor:pointer; border-radius:6px; border:1px solid #ffe966; background:#003366; color:#ffe966; font-weight:bold; }
+.mode-buttons button:hover { background:#ffe966; color:#003366; }
 
 /* Export buttons */
-.export-buttons { margin: 20px; display: flex; gap: 12px; justify-content: center; }
-.export-buttons button { padding: 10px 16px; cursor: pointer; border-radius: 6px; border:1px solid #0ff; background:#111; color:#0ff; font-weight:bold; transition:0.3s; }
-.export-buttons button:hover { background:#0ff; color:#111; }
+.export-buttons { margin:20px; display:flex; gap:12px; justify-content:center; }
+.export-buttons button { padding:10px 16px; cursor:pointer; border-radius:6px; border:1px solid #ffe966; background:#003366; color:#ffe966; font-weight:bold; }
+.export-buttons button:hover { background:#ffe966; color:#003366; }
 
 /* Export area */
-.export-area { 
-  width: 95%; max-width: 650px; background:#111; padding:25px; 
-  border-radius: 12px; margin: 20px 0; box-shadow: 0 0 25px #0ff inset; 
-}
+.export-area { width:95%; max-width:700px; background:#002244; padding:25px; border-radius:12px; margin:20px 0; box-shadow:0 0 25px #004488; }
 
 /* Category cards */
 .category-card {
-  display: flex; 
-  flex-direction: row; 
-  justify-content: space-between; 
-  align-items: center;
-  background: linear-gradient(135deg,#111,#222);
-  margin: 10px 0; padding: 16px 20px;
-  border-radius: 12px;
-  width: 100%;
-  box-shadow: 0 0 12px #0ff inset, 0 0 6px #0ff;
-  transition: all 0.4s;
+  display:flex; flex-direction:row; justify-content:space-between; align-items:center;
+  background:linear-gradient(135deg,#003366,#004488);
+  margin:10px 0; padding:16px 20px;
+  border-radius:12px; width:100%; box-sizing:border-box;
+  box-shadow:0 0 12px #004488 inset,0 0 6px #ffe966;
 }
-.category-card:hover { box-shadow: 0 0 20px #0ff inset, 0 0 12px #0ff; }
-
-/* Category text */
-.category-text { 
-  font-size: 18px; 
-  font-weight:bold; 
-  flex:1; 
-  padding-left: 8px;
-  color:#0ff;
-}
-
-/* Reroll button */
-.reroll-btn { 
-  padding: 6px 14px; cursor: pointer; font-size: 16px; border-radius: 6px; 
-  flex-shrink:0; border:1px solid #0ff; background:#111; color:#0ff; font-weight:bold; 
-  transition:0.3s;
-}
-.reroll-btn:hover { background:#0ff; color:#111; }
+.category-text { font-size:18px; font-weight:bold; flex:1; padding-left:8px; color:#ffe966; }
+.reroll-btn { padding:6px 14px; cursor:pointer; font-size:16px; border-radius:6px; flex-shrink:0; border:1px solid #ffe966; background:#003366; color:#ffe966; font-weight:bold; }
+.reroll-btn:hover { background:#ffe966; color:#003366; }
 
 /* Dice roll animation */
 @keyframes diceRoll {
-  0% { transform: translateX(0px) rotate(0deg); }
-  20% { transform: translateX(-5px) rotate(-5deg); }
-  40% { transform: translateX(5px) rotate(5deg); }
-  60% { transform: translateX(-3px) rotate(-3deg); }
-  80% { transform: translateX(3px) rotate(3deg); }
-  100% { transform: translateX(0px) rotate(0deg); }
+  0% { transform: translateX(0px) rotate(0deg);}
+  20% { transform: translateX(-5px) rotate(-5deg);}
+  40% { transform: translateX(5px) rotate(5deg);}
+  60% { transform: translateX(-3px) rotate(-3deg);}
+  80% { transform: translateX(3px) rotate(3deg);}
+  100% { transform: translateX(0px) rotate(0deg);}
 }
 .dice-roll { animation: diceRoll 0.5s ease; }
 
 /* Player results */
-.player-results { margin: 15px 0; text-align: center; font-weight:bold; font-size:18px; }
-.red-player { color: #f33; }
-.blue-player { color: #3af; }
+.player-results { margin:15px 0; text-align:center; font-weight:bold; font-size:18px; }
+.red-player { color:#ff5555; }
+.blue-player { color:#55ccff; }
 
 /* Reminder */
-.reminder { font-size: 12px; text-align:center; margin-top: 12px; color:#aaa; }
+.reminder { font-size:12px; text-align:center; margin-top:12px; color:#ffe966; }
 
 /* Responsive adjustments */
-@media screen and (max-width: 650px){
-  .category-card { flex-direction: column; align-items:flex-start; }
-  .reroll-btn { margin-top: 8px; }
+@media screen and (max-width:700px){
+  .category-card { flex-direction:column; align-items:flex-start; }
+  .reroll-btn { margin-top:8px; }
   .category-text { font-size:16px; padding-left:0; }
 }
