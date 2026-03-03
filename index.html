@@ -8,55 +8,36 @@
 </head>
 <body>
 
-<div class="app-container">
+<div class="container">
 
-  <header class="header">
-    <h1>Dropfleet Commander Mission Generator</h1>
-    <div id="modeBadge" class="mode-badge badge-casual">Mode: Casual</div>
-  </header>
+  <h1>Dropfleet Commander Mission Generator</h1>
+  <div id="modeBadge" class="badge badge-casual">Mode: Casual</div>
 
-  <!-- CONTROL PANEL -->
-  <section class="control-panel">
+  <!-- PLAYER CONTROLS -->
+  <div class="row">
+    <input id="player1" class="input" placeholder="Player 1 Name">
+    <input id="player2" class="input" placeholder="Player 2 Name">
+    <button class="btn" id="assignBtn" onclick="assignPlayers()">Assign Red/Blue</button>
+    <button class="btn" id="resetPlayersBtn" onclick="resetPlayers()" disabled>Reset</button>
+  </div>
 
-    <div class="player-row">
-      <input id="player1" class="player-input" placeholder="Player 1 Name">
-      <input id="player2" class="player-input" placeholder="Player 2 Name">
-      <button class="btn" id="assignBtn" onclick="assignPlayers()">Assign Red/Blue</button>
-      <button class="btn" id="resetPlayersBtn" onclick="resetPlayers()" disabled>Reset</button>
-    </div>
+  <!-- MODE BUTTONS -->
+  <div class="row">
+    <button class="btn" onclick="rollMission('casual')" title="Roll 1-4 for all categories">Casual</button>
+    <button class="btn" onclick="rollMission('narrative')" title="Roll 1-6 for all categories">Casual Narrative</button>
+    <button class="btn" onclick="rollMission('competitive')" title="Deployment limited to 1-4, Layouts limited to 1-3">Competitive</button>
+    <button class="btn" onclick="rollMission('standard')" title="Roll Scenario only">Standard Scenario</button>
+  </div>
 
-    <div class="mode-row">
-      <button class="btn" onclick="rollMission('casual')" title="Roll 1-4 for all categories">Casual</button>
-
-      <button class="btn" onclick="rollMission('narrative')" title="Roll 1-6 for all categories">
-        Casual Narrative
-      </button>
-
-      <button class="btn"
-        onclick="rollMission('competitive')"
-        title="Deployment limited to 1-4, Layouts limited to 1-3">
-        Competitive
-      </button>
-
-      <button class="btn" onclick="rollMission('standard')" title="Roll Scenario only">
-        Standard Scenario
-      </button>
-    </div>
-
-    <div class="copy-row">
-      <button class="btn" onclick="copyMission()">Copy Mission to Clipboard</button>
-    </div>
-
-  </section>
+  <!-- COPY BUTTON -->
+  <div class="row">
+    <button class="btn" onclick="copyMission()">Copy Mission to Clipboard</button>
+  </div>
 
   <!-- RESULTS -->
-  <section id="missionBoard">
-    <div id="playerResults" class="player-results"></div>
-    <div id="results" class="results"></div>
-    <div class="reminder">
-      Remember: Determine Red/Blue players before game setup.
-    </div>
-  </section>
+  <div id="playerResults" class="player-results"></div>
+  <div id="results"></div>
+  <div class="reminder">Determine Red/Blue players before game setup.</div>
 
 </div>
 
