@@ -1,81 +1,92 @@
 body {
-  font-family: 'Orbitron', sans-serif;
-  background: #071522;
-  color: #e8d38a;
   margin: 0;
-  padding: 0;
+  background: #06121c;
+  color: #e6d089;
+  font-family: 'Orbitron', sans-serif;
 }
+
+.app-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* HEADER */
 
 .header {
   text-align: center;
-  margin-top: 20px;
+  margin-bottom: 25px;
 }
 
 .mode-badge {
   margin-top: 8px;
-  padding: 6px 14px;
-  border-radius: 14px;
-  border: 1px solid #bfa14a;
+  padding: 6px 16px;
+  border-radius: 20px;
+  border: 1px solid #b89b44;
   display: inline-block;
   font-size: 13px;
 }
 
-.badge-casual { background: #11263d; }
-.badge-narrative { background: #16314f; }
-.badge-competitive { background: #1c385c; }
-.badge-standard { background: #102336; }
+.badge-casual { background: #13283d; }
+.badge-narrative { background: #183657; }
+.badge-competitive { background: #1c3e63; }
+.badge-standard { background: #0f2236; }
 
-/* PLAYER SECTION */
-.player-section {
+/* CONTROL PANEL */
+
+.control-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  margin-bottom: 35px;
+}
+
+.player-row,
+.mode-row,
+.copy-row {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 12px;
-  margin: 20px 0;
+  gap: 14px;
   flex-wrap: wrap;
 }
 
+/* INPUTS */
+
 .player-input {
-  background: #0e2236;
-  border: 1px solid #bfa14a;
+  background: #0e1f2f;
+  border: 1px solid #b89b44;
   border-radius: 6px;
-  padding: 8px 10px;
-  color: #e8d38a;
+  padding: 8px 12px;
+  color: #e6d089;
   font-size: 14px;
 }
 
-/* MODE BUTTON ROW */
-.buttons-container {
-  display: flex;
-  justify-content: center;
-  gap: 14px;
-  flex-wrap: wrap;
-  margin-bottom: 25px;
-}
+/* BUTTON STYLE (UNIFIED) */
 
-/* UNIVERSAL BUTTON STYLE */
-.mode-btn {
-  background: linear-gradient(145deg, #18324d, #12273d);
-  color: #e8d38a;
-  border: 2px solid #bfa14a;
-  border-radius: 8px;
+.btn {
+  background: linear-gradient(145deg, #17324c, #102638);
+  border: 2px solid #b89b44;
+  color: #e6d089;
   padding: 9px 18px;
+  border-radius: 8px;
   font-size: 14px;
   cursor: pointer;
   transition: 0.2s ease;
 }
 
-.mode-btn:hover {
-  box-shadow: 0 0 10px #bfa14a;
+.btn:hover {
+  box-shadow: 0 0 12px #b89b44;
   transform: translateY(-2px);
 }
 
-.mode-btn:disabled {
+.btn:disabled {
   opacity: 0.4;
   cursor: not-allowed;
 }
 
-/* RESULTS AREA */
+/* RESULTS */
+
 #missionBoard {
   display: flex;
   flex-direction: column;
@@ -84,13 +95,13 @@ body {
 
 .player-results {
   display: flex;
-  gap: 25px;
-  margin-bottom: 15px;
+  gap: 30px;
+  margin-bottom: 20px;
   font-weight: bold;
 }
 
-.red-player { color: #d64545; }
-.blue-player { color: #3d8edb; }
+.red-player { color: #d84c4c; }
+.blue-player { color: #4c8ed8; }
 
 .results {
   width: 100%;
@@ -103,13 +114,13 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: #0f2236;
-  border: 1px solid #bfa14a;
+  background: #0d2133;
+  border: 1px solid #b89b44;
   border-radius: 8px;
-  padding: 10px 14px;
+  padding: 12px 18px;
   margin: 8px 0;
   width: 90%;
-  max-width: 650px;
+  max-width: 700px;
 }
 
 .category-text {
@@ -117,27 +128,21 @@ body {
 }
 
 .reroll-btn {
-  background: #132b44;
-  border: 1px solid #bfa14a;
-  color: #e8d38a;
+  background: #13283d;
+  border: 1px solid #b89b44;
+  color: #e6d089;
   border-radius: 6px;
-  padding: 5px 10px;
+  padding: 6px 12px;
   cursor: pointer;
-  transition: 0.2s;
 }
 
 .reroll-btn:hover {
-  box-shadow: 0 0 8px #bfa14a;
+  box-shadow: 0 0 8px #b89b44;
 }
 
 .reminder {
-  margin-top: 15px;
+  margin-top: 18px;
   font-size: 12px;
   opacity: 0.7;
   text-align: center;
-}
-
-.footer {
-  text-align: center;
-  margin: 30px 0;
 }
