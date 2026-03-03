@@ -1,7 +1,7 @@
-/* Base body styling */
+/* Body & background */
 body {
-  font-family: 'Arial', sans-serif;
-  background: #111 url('starfield.png') repeat;
+  font-family: 'Orbitron', sans-serif, Arial, sans-serif;
+  background: #0b0b0f url('starfield.png') repeat;
   color: #eee;
   margin: 0; padding: 0;
   display: flex; flex-direction: column; align-items: center;
@@ -9,93 +9,101 @@ body {
 
 /* Header */
 .header { text-align: center; margin: 20px; }
-.header h1 { font-size: 28px; text-shadow: 0 0 5px #0ff; }
+.header h1 { font-size: 32px; text-shadow: 0 0 10px #0ff, 0 0 20px #0ff; }
 
 /* Mode badge */
 .mode-badge {
-  display: inline-block; padding: 6px 12px;
-  border-radius: 6px; font-weight: bold;
+  display: inline-block; padding: 8px 16px;
+  border-radius: 8px; font-weight: bold;
   margin-top: 10px;
-  transition: all 0.4s ease;
+  transition: all 0.5s ease;
+  box-shadow: 0 0 15px #0ff;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
-.badge-casual { background:#3a87ad; box-shadow:0 0 12px #3a87ad; }
-.badge-narrative { background:#5cb85c; box-shadow:0 0 12px #5cb85c; }
-.badge-competitive { background:#d9534f; box-shadow:0 0 12px #d9534f; }
-.badge-standard { background:#f0ad4e; box-shadow:0 0 12px #f0ad4e; }
+.badge-casual { background:#1a5a7a; box-shadow:0 0 15px #1a5a7a; }
+.badge-narrative { background:#2a7a2a; box-shadow:0 0 15px #2a7a2a; }
+.badge-competitive { background:#aa2a2a; box-shadow:0 0 15px #aa2a2a; }
+.badge-standard { background:#aa7a2a; box-shadow:0 0 15px #aa7a2a; }
 
 /* Player setup */
 .player-setup { 
-  margin: 20px; display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; 
+  margin: 20px; display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; 
 }
-.player-setup input { padding: 5px; width: 130px; border-radius: 4px; border: 1px solid #555; }
-.player-setup button { padding: 6px 12px; cursor: pointer; border-radius: 4px; }
+.player-setup input { padding: 6px 10px; width: 150px; border-radius: 6px; border: 1px solid #555; background:#111; color:#eee; }
+.player-setup button { padding: 8px 14px; cursor: pointer; border-radius: 6px; background:#222; color:#0ff; border:1px solid #0ff; transition:0.3s; }
+.player-setup button:hover { background:#0ff; color:#111; }
 
 /* Mode buttons */
-.mode-buttons { margin: 20px; display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
-.mode-buttons button { padding: 8px 14px; cursor: pointer; border-radius: 4px; transition: transform 0.2s; }
-.mode-buttons button:hover { transform: scale(1.05); }
+.mode-buttons { margin: 20px; display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; }
+.mode-buttons button { padding: 10px 16px; cursor: pointer; border-radius: 6px; border:1px solid #0ff; background:#111; color:#0ff; font-weight:bold; transition:0.3s; }
+.mode-buttons button:hover { background:#0ff; color:#111; }
 
 /* Export buttons */
-.export-buttons { margin: 20px; display: flex; gap: 10px; justify-content: center; }
-.export-buttons button { padding: 8px 12px; cursor: pointer; border-radius: 4px; }
+.export-buttons { margin: 20px; display: flex; gap: 12px; justify-content: center; }
+.export-buttons button { padding: 10px 16px; cursor: pointer; border-radius: 6px; border:1px solid #0ff; background:#111; color:#0ff; font-weight:bold; transition:0.3s; }
+.export-buttons button:hover { background:#0ff; color:#111; }
 
 /* Export area */
 .export-area { 
-  width: 90%; max-width: 600px; background:#222; padding:20px; 
-  border-radius: 10px; margin: 20px 0; box-shadow: 0 0 10px #0ff; 
+  width: 95%; max-width: 650px; background:#111; padding:25px; 
+  border-radius: 12px; margin: 20px 0; box-shadow: 0 0 25px #0ff inset; 
 }
 
-/* Category card styling */
+/* Category cards */
 .category-card {
   display: flex; 
   flex-direction: row; 
   justify-content: space-between; 
   align-items: center;
-  background: #333;
-  margin: 10px 0; padding: 12px;
-  border-radius: 8px;
+  background: linear-gradient(135deg,#111,#222);
+  margin: 10px 0; padding: 16px 20px;
+  border-radius: 12px;
   width: 100%;
-  box-shadow: 0 0 8px #000 inset;
-  transition: all 0.3s;
+  box-shadow: 0 0 12px #0ff inset, 0 0 6px #0ff;
+  transition: all 0.4s;
 }
-.category-card:hover { box-shadow: 0 0 15px #0ff; }
+.category-card:hover { box-shadow: 0 0 20px #0ff inset, 0 0 12px #0ff; }
 
+/* Category text */
 .category-text { 
-  text-align: left; 
-  font-size: 16px; 
-  flex: 1; 
-  margin-right: 10px; 
+  font-size: 18px; 
+  font-weight:bold; 
+  flex:1; 
+  padding-left: 8px;
+  color:#0ff;
 }
 
 /* Reroll button */
 .reroll-btn { 
-  padding: 5px 10px; cursor: pointer; font-size: 14px; border-radius: 4px; 
-  flex-shrink: 0;
+  padding: 6px 14px; cursor: pointer; font-size: 16px; border-radius: 6px; 
+  flex-shrink:0; border:1px solid #0ff; background:#111; color:#0ff; font-weight:bold; 
+  transition:0.3s;
 }
-.reroll-btn:hover { background: #0ff; color: #111; transition: 0.3s; }
+.reroll-btn:hover { background:#0ff; color:#111; }
 
 /* Dice roll animation */
 @keyframes diceRoll {
-  0% { transform: rotate(0deg); }
-  25% { transform: rotate(10deg); }
-  50% { transform: rotate(-10deg); }
-  75% { transform: rotate(5deg); }
-  100% { transform: rotate(0deg); }
+  0% { transform: translateX(0px) rotate(0deg); }
+  20% { transform: translateX(-5px) rotate(-5deg); }
+  40% { transform: translateX(5px) rotate(5deg); }
+  60% { transform: translateX(-3px) rotate(-3deg); }
+  80% { transform: translateX(3px) rotate(3deg); }
+  100% { transform: translateX(0px) rotate(0deg); }
 }
-.dice-roll { animation: diceRoll 0.4s ease; }
+.dice-roll { animation: diceRoll 0.5s ease; }
 
 /* Player results */
-.player-results { margin: 10px 0; text-align: center; font-weight: bold; }
+.player-results { margin: 15px 0; text-align: center; font-weight:bold; font-size:18px; }
 .red-player { color: #f33; }
 .blue-player { color: #3af; }
 
-/* Reminder text */
-.reminder { font-size: 12px; text-align: center; margin-top: 10px; color: #aaa; }
+/* Reminder */
+.reminder { font-size: 12px; text-align:center; margin-top: 12px; color:#aaa; }
 
 /* Responsive adjustments */
-@media screen and (max-width: 600px) {
-  .mode-buttons button, .export-buttons button { width: 100%; }
-  .player-setup input { width: 100%; }
-  .category-card { flex-direction: column; align-items: flex-start; }
-  .reroll-btn { margin-top: 5px; }
+@media screen and (max-width: 650px){
+  .category-card { flex-direction: column; align-items:flex-start; }
+  .reroll-btn { margin-top: 8px; }
+  .category-text { font-size:16px; padding-left:0; }
 }

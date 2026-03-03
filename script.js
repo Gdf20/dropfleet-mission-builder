@@ -1,3 +1,4 @@
+// ------------------- Data -------------------
 const deployments = ["Line","Table Corners","Midboard","From Corners","Attacker Defender","Encirclement"];
 const approaches = ["Standoff","Close Enough","Column","Counterattack","Delayed Response","Home Fleet Disadvantage"];
 const layouts = ["Diagonal","Edge Case","Eruption","Gatecrash","Moonlight","Moonstruck"];
@@ -5,10 +6,12 @@ const variants = ["Guarded Sectors","Secure Comms Array","Battlescarred","Gridlo
 const objectives = ["Attrition","Survey","Extract","Protect","Breakthrough","Raise"];
 const scenarios = ["Take and Hold","Erupting Battlefront","Power Gate","Shack and Yaw","Orbital Support","Entrapment"];
 
+// ------------------- Global State -------------------
 let playersAssigned = false;
 let currentMode = "casual";
 let currentRolls = {};
 
+// ------------------- Utility -------------------
 function random(max) { return Math.floor(Math.random() * max); }
 
 // ------------------- Player Assignment -------------------
@@ -49,7 +52,7 @@ function setBadge(mode) {
   badge.innerText = "Mode: " + labels[mode];
 }
 
-// ------------------- Roll a single category -------------------
+// ------------------- Roll Category -------------------
 function rollCategory(name, array, max) {
   let idx;
   do { idx = random(max); } while (currentRolls[name] === idx);
@@ -74,8 +77,10 @@ function rollMission(mode) {
 
   let depMax=deployments.length, appMax=approaches.length, layMax=layouts.length,
       varMax=variants.length, objMax=objectives.length;
+
   if(mode==="casual"){ depMax=appMax=layMax=varMax=objMax=4; }
-  if(mode==="competitive"){ depMax=4; layMax=3; }
+  if(mode==="narrative"){ depMax=appMax=layMax=varMax=objMax=6; }
+  if(mode==="competitive"){ depMax=4; layMax=3; appMax=6; varMax=6; objMax=6; }
 
   const categories = [
     {name:"Deployment", array:deployments, max:depMax, css:"deployment"},
@@ -94,7 +99,7 @@ function rollMission(mode) {
   }).join("");
 }
 
-// ------------------- Reroll a single category -------------------
+// ------------------- Reroll Single Category -------------------
 function rerollCategory(name) {
   const catDiv = document.querySelector(`.category-card[data-name='${name}']`);
   if(!catDiv) return;
