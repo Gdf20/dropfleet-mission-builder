@@ -157,8 +157,11 @@ function exportPNG() {
   missionBoard.style.padding = "20px";
   missionBoard.style.boxSizing = "border-box";
 
+  // Force redraw to stabilize layout
+  missionBoard.getBoundingClientRect();
+
   html2canvas(missionBoard, {
-    scale: 0.7, // scale down for smaller PNG
+    scale: 0.7,
     useCORS: true,
     allowTaint: true
   }).then(canvas => {
@@ -167,9 +170,11 @@ function exportPNG() {
     link.href = canvas.toDataURL("image/png");
     link.click();
 
-    // Restore dice-roll animation
+    // Restore dice-roll animation and layout
     cards.forEach(c => c.classList.add("dice-roll"));
     missionBoard.style.width = "";
     missionBoard.style.padding = "";
+  }).catch(err => {
+    alert("Error exporting PNG: " + err);
   });
 }
