@@ -1,72 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>DFC Mission Generator</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dropfleet Commander Mission Generator</title>
+<link rel="stylesheet" href="style.css">
 </head>
-
 <body>
-<div class="stars"></div>
 
-<div class="container">
-
+<div class="header">
   <h1>Dropfleet Commander Mission Generator</h1>
-
-  <div id="modeBadge" class="mode-badge badge-casual">
-    Mode: Casual
-  </div>
-
-  <div class="button-row">
-    <button class="btn-casual" onclick="rollMission('casual')">
-      Casual<br><small>1-4 all categories</small>
-    </button>
-
-    <button class="btn-narrative" onclick="rollMission('narrative')">
-      Casual Narrative<br><small>1-6 all categories</small>
-    </button>
-
-    <button class="btn-competitive" onclick="rollMission('competitive')">
-      Competitive<br><small>Deploy 1-4 | Layout 1-3</small>
-    </button>
-
-    <button class="btn-standard" onclick="rollMission('standard')">
-      Standard Scenarios<br><small>Scenario only</small>
-    </button>
-  </div>
-
-  <div id="exportArea">
-
-    <div class="player-section">
-      <h2>Player Assignment</h2>
-      <input type="text" id="player1" placeholder="Player 1 Name">
-      <input type="text" id="player2" placeholder="Player 2 Name">
-      <div>
-        <button id="assignBtn" onclick="assignPlayers()">Assign Red / Blue</button>
-      </div>
-      <div id="playerResults" class="player-results"></div>
-    </div>
-
-    <div id="results" class="results">
-      <h2>Press a button to generate mission</h2>
-    </div>
-
-    <div class="footer-note">
-      Remember to determine who is the Red player and who is the Blue player before beginning game setup.
-    </div>
-
-  </div>
-
-  <div class="utility-row">
-    <button onclick="copyMission()">Copy Mission</button>
-    <button onclick="exportPNG()">Export to PNG</button>
-  </div>
-
+  <div id="modeBadge" class="mode-badge">Mode: Casual</div>
 </div>
 
-<script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
-<script src="script.js"></script>
+<div class="player-setup">
+  <input id="player1" type="text" placeholder="Player 1 Name">
+  <input id="player2" type="text" placeholder="Player 2 Name">
+  <button id="assignBtn" onclick="assignPlayers()">Assign Red/Blue</button>
+  <button id="resetPlayersBtn" onclick="resetPlayers()" disabled>Reset Players</button>
+</div>
 
+<div id="playerResults" class="player-results"></div>
+
+<div class="mode-buttons">
+  <button onclick="rollMission('casual')">Casual (1-4)</button>
+  <button onclick="rollMission('narrative')">Casual Narrative (1-6)</button>
+  <button onclick="rollMission('competitive')">Competitive</button>
+  <button onclick="rollMission('standard')">Standard Scenario</button>
+</div>
+
+<div id="exportArea" class="export-area">
+  <div id="results" class="results"></div>
+  <div class="reminder">Remember: Determine Red/Blue players before game setup.</div>
+</div>
+
+<div class="export-buttons">
+  <button onclick="copyMission()">Copy Mission to Clipboard</button>
+  <button onclick="exportPNG()">Export Mission to PNG</button>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+<script src="script.js"></script>
 </body>
 </html>
