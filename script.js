@@ -1,133 +1,102 @@
-const deployments = ["Line","Table Corners","Midboard","From Corners","Attacker Defender","Encirclement"];
-const approaches = ["Standoff","Close Enough","Column","Counterattack","Delayed Response","Home Fleet Disadvantage"];
-const layouts = ["Diagonal","Edge Case","Eruption","Gatecrash","Moonlight","Moonstruck"];
-const variants = ["Guarded Sectors","Secure Comms Array","Battlescarred","Gridlocked","Expansive Atmosphere","Orbital Complex"];
-const objectives = ["Attrition","Survey","Extract","Protect","Breakthrough","Raise"];
-const scenarios = ["Take and Hold","Erupting Battlefront","Power Gate","Shack and Yaw","Orbital Support","Entrapment"];
-
+let currentMode = null;
 let playersAssigned = false;
-let currentMode = "casual";
 
-// Track current roll indices to allow rerolls
-let currentRolls = {};
+const categories = ["Deployment", "Layout", "Primary", "Secondary", "Twist"];
 
-function random(max) { return Math.floor(Math.random() * max); }
+const modeLimits = {
+    casual: { default: 4 },
+    narrative: { default: 6 },
+    competitive: {
+        Deployment: 4,
+        Layout: 3,
+        default: 6
+    },
+    scenario: { default: 6 }
+};
 
-// ------------------- Player Assignment -------------------
-function assignPlayers() {
-  if (playersAssigned) return;
+document.querySelectorAll(".mode-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+        currentMode = btn.dataset.mode;
+        generateAll();
+    });
+});
 
-  const p1 = document.getElementById("player1").value.trim();
-  const p2 = document.getElementById("player2").value.trim();
+function generateAll() {
+    const resultsDiv = document.getElementById("results");
+    resultsDiv.innerHTML = "";
 
-  if (!p1 || !p2) {
-    alert("Enter both player names.");
-    return;
-  }
-
-  // Randomly assign Red/Blue
-  const roll = Math.random() < 0.5 ? 0 : 1;
-  const output = document.getElementById("playerResults");
-
-  if (roll === 0) {
-    output.innerHTML = `<div class="red-player">Red: ${p1}</div><div class="blue-player">Blue: ${p2}</div>`;
-  } else {
-    output.innerHTML = `<div class="red-player">Red: ${p2}</div><div class="blue-player">Blue: ${p1}</div>`;
-  }
-
-  playersAssigned = true;
-  document.getElementById("assignBtn").disabled = true;
+    categories.forEach(cat => {
+        createRow(cat);
+    });
 }
 
-// ------------------- Mode Badge -------------------
-function setBadge(mode) {
-  currentMode = mode;
-  const badge = document.getElementById("modeBadge");
-  badge.className = "mode-badge badge-" + mode;
-  const labels = {casual:"Casual", narrative:"Casual Narrative", competitive:"Competitive", standard:"Standard Scenario"};
-  badge.innerText = "Mode: " + labels[mode];
+function createRow(category) {
+    const resultsDiv = document.getElementById("results");
+
+    const row = document.createElement("div");
+    row.className = "result-row";
+
+    const text = document.createElement("div");
+    text.className = "result-text";
+
+    const reroll = document.createElement("button");
+    reroll.className = "reroll-btn";
+    reroll.textContent = "Reroll";
+
+    reroll.addEventListener("click", () => {
+        rollCategory(category, text);
+    });
+
+    rollCategory(category, text);
+
+    row.appendChild(document.createElement("div"));
+    row.appendChild(text);
+    row.appendChild(reroll);
+
+    resultsDiv.appendChild(row);
 }
 
-// ------------------- Roll a single category -------------------
-function rollCategory(name, array, max) {
-  let idx;
-  do { idx = random(max); } while (currentRolls[name] === idx);
-  currentRolls[name] = idx;
-  return {num: idx+1, value: array[idx]};
+function rollCategory(category, textElement) {
+    if (!currentMode) return;
+
+    let limit = modeLimits[currentMode][category] || modeLimits[currentMode].default;
+    let roll = Math.floor(Math.random() * limit) + 1;
+
+    textElement.textContent = `${category}: ${roll}`;
 }
 
-// ------------------- Main Mission Roll -------------------
-function rollMission(mode) {
-  setBadge(mode);
-  currentRolls = {}; // reset for new mission
-  const results = document.getElementById("results");
+/* PLAYER ASSIGNMENT */
 
-  if(mode==="standard") {
-    const s = rollCategory("Scenario", scenarios, scenarios.length);
-    results.innerHTML = `<div class="category-card scenario"><strong>Scenario:</strong> ${s.num} - ${s.value}</div>`;
-    return;
-  }
+document.getElementById("assignPlayers").addEventListener("click", () => {
+    if (playersAssigned) return;
 
-  // Mode rules
-  let depMax=deployments.length, appMax=approaches.length, layMax=layouts.length,
-      varMax=variants.length, objMax=objectives.length;
+    const p1 = document.getElementById("player1").value || "Player 1";
+    const p2 = document.getElementById("player2").value || "Player 2";
 
-  if(mode==="casual"){ depMax=appMax=layMax=varMax=objMax=4; }
-  if(mode==="competitive"){ depMax=4; layMax=3; }
+    const rand = Math.random() < 0.5;
 
-  const categories = [
-    {name:"Deployment", array:deployments, max:depMax, css:"deployment"},
-    {name:"Approach Type", array:approaches, max:appMax, css:"approach"},
-    {name:"Layout", array:layouts, max:layMax, css:"layout"},
-    {name:"Variant", array:variants, max:varMax, css:"variant"},
-    {name:"Objective", array:objectives, max:objMax, css:"objective"},
-  ];
+    const red = rand ? p1 : p2;
+    const blue = rand ? p2 : p1;
 
-  results.innerHTML = categories.map(c=>{
-    const roll = rollCategory(c.name, c.array, c.max);
-    return `<div class="category-card ${c.css}" data-name="${c.name}">
-              <strong>${c.name}:</strong> ${roll.num} - ${roll.value}
-              <button class="reroll-btn" onclick="rerollCategory('${c.name}')">Reroll</button>
-            </div>`;
-  }).join("");
-}
+    document.getElementById("playerResult").textContent =
+        `Red Player: ${red} | Blue Player: ${blue}`;
 
-// ------------------- Reroll a single category -------------------
-function rerollCategory(name) {
-  const catDiv = document.querySelector(`.category-card[data-name='${name}']`);
-  if(!catDiv) return;
+    playersAssigned = true;
+});
 
-  // Determine category array & max based on currentMode
-  let arr=[], max=0;
-  switch(name){
-    case "Deployment": arr=deployments; max=(currentMode==="casual"||currentMode==="competitive")?4:6; break;
-    case "Approach Type": arr=approaches; max=(currentMode==="casual")?4:6; break;
-    case "Layout": arr=layouts; max=(currentMode==="casual")?4:6; if(currentMode==="competitive") max=3; break;
-    case "Variant": arr=variants; max=(currentMode==="casual")?4:6; break;
-    case "Objective": arr=objectives; max=(currentMode==="casual")?4:6; break;
-    default: return;
-  }
+document.getElementById("resetPlayers").addEventListener("click", () => {
+    playersAssigned = false;
+    document.getElementById("playerResult").textContent = "";
+});
 
-  const roll = rollCategory(name, arr, max);
-  catDiv.innerHTML = `<strong>${name}:</strong> ${roll.num} - ${roll.value} <button class="reroll-btn" onclick="rerollCategory('${name}')">Reroll</button>`;
-}
+/* COPY */
 
-// ------------------- Copy Mission -------------------
-function copyMission() {
-  navigator.clipboard.writeText(document.getElementById("exportArea").innerText);
-  alert("Mission copied!");
-}
+document.getElementById("copyBtn").addEventListener("click", () => {
+    let text = document.getElementById("playerResult").textContent + "\n";
 
-// ------------------- Export to PNG (fix animation) -------------------
-function exportPNG() {
-  const cards = document.querySelectorAll(".category-card");
-  cards.forEach(c=>c.classList.remove("shake")); // pause dice-roll animation
+    document.querySelectorAll(".result-text").forEach(r => {
+        text += r.textContent + "\n";
+    });
 
-  html2canvas(document.getElementById("exportArea")).then(canvas=>{
-    const link=document.createElement("a");
-    link.download="mission.png";
-    link.href=canvas.toDataURL();
-    link.click();
-    cards.forEach(c=>c.classList.add("shake")); // restore animation
-  });
-}
+    navigator.clipboard.writeText(text);
+});

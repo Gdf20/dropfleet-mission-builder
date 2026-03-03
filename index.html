@@ -1,72 +1,85 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>DFC Mission Generator</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<title>Mission Generator</title>
+<link rel="stylesheet" href="style.css">
 </head>
-
 <body>
-<div class="stars"></div>
 
-<div class="container">
+<div class="app-container">
 
-  <h1>Dropfleet Commander Mission Generator</h1>
+    <h1>Mission Generator</h1>
 
-  <div id="modeBadge" class="mode-badge badge-casual">
-    Mode: Casual
-  </div>
+    <!-- MODE BUTTONS -->
+    <div class="mode-select">
+        <button class="mode-btn" data-mode="casual" 
+            data-tooltip="Random mission setup with options 1 - 4 across all categories.">
+            Casual
+        </button>
 
-  <div class="button-row">
-    <button class="btn-casual" onclick="rollMission('casual')">
-      Casual<br><small>1-4 all categories</small>
-    </button>
+        <button class="mode-btn" data-mode="narrative"
+            data-tooltip="Themed mission setup with full-range rolls and story flavor, options 1 - 6 across all categories.">
+            Casual Narrative
+        </button>
 
-    <button class="btn-narrative" onclick="rollMission('narrative')">
-      Casual Narrative<br><small>1-6 all categories</small>
-    </button>
+        <button class="mode-btn" data-mode="competitive"
+            data-tooltip="Deployment limited to 1-4, Layouts limited to 1-3">
+            Competitive
+        </button>
 
-    <button class="btn-competitive" onclick="rollMission('competitive')">
-      Competitive<br><small>Deploy 1-4 | Layout 1-3</small>
-    </button>
+        <button class="mode-btn" data-mode="scenario"
+            data-tooltip="Standard rulebook scenarios">
+            Scenario
+        </button>
+    </div>
 
-    <button class="btn-standard" onclick="rollMission('standard')">
-      Standard Scenarios<br><small>Scenario only</small>
-    </button>
-  </div>
-
-  <div id="exportArea">
-
+    <!-- PLAYER SELECT -->
     <div class="player-section">
-      <h2>Player Assignment</h2>
-      <input type="text" id="player1" placeholder="Player 1 Name">
-      <input type="text" id="player2" placeholder="Player 2 Name">
-      <div>
-        <button id="assignBtn" onclick="assignPlayers()">Assign Red / Blue</button>
-      </div>
-      <div id="playerResults" class="player-results"></div>
+        <input type="text" id="player1" placeholder="Player 1 Name">
+        <input type="text" id="player2" placeholder="Player 2 Name">
+        <button id="assignPlayers">Assign Red / Blue</button>
+        <button id="resetPlayers">Reset</button>
+
+        <div id="playerResult"></div>
     </div>
 
-    <div id="results" class="results">
-      <h2>Press a button to generate mission</h2>
+    <!-- RESULTS -->
+    <div class="results" id="results"></div>
+
+    <button id="copyBtn">Copy Mission to Clipboard</button>
+
+    <!-- MODE DESCRIPTIONS -->
+    <div class="mode-overview">
+        <h2>Mission Mode Overview</h2>
+
+        <div class="mode-item">
+            <strong>Casual</strong>
+            <p>Random mission setup with options 1 - 4 across all categories.</p>
+        </div>
+
+        <div class="mode-item">
+            <strong>Casual Narrative</strong>
+            <p>Themed mission setup with full-range rolls and story flavor, options 1 - 6 across all categories.</p>
+        </div>
+
+        <div class="mode-item">
+            <strong>Competitive</strong>
+            <p>Deployment limited to 1-4, Layouts limited to 1-3</p>
+        </div>
+
+        <div class="mode-item">
+            <strong>Scenario</strong>
+            <p>Standard rulebook scenarios</p>
+        </div>
     </div>
 
-    <div class="footer-note">
-      Remember to determine who is the Red player and who is the Blue player before beginning game setup.
+    <div class="rulebook-link">
+        <a href="#" target="_blank">Download Rulebook</a>
     </div>
-
-  </div>
-
-  <div class="utility-row">
-    <button onclick="copyMission()">Copy Mission</button>
-    <button onclick="exportPNG()">Export to PNG</button>
-  </div>
 
 </div>
 
-<script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
 <script src="script.js"></script>
-
 </body>
 </html>
