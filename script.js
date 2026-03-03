@@ -143,38 +143,3 @@ function copyMission() {
   navigator.clipboard.writeText(textToCopy.trim());
   alert("Mission copied!");
 }
-
-// ------------------- Export to PNG (Fixed) -------------------
-function exportPNG() {
-  const missionBoard = document.getElementById("missionBoard");
-
-  // Temporarily remove dice-roll animation
-  const cards = missionBoard.querySelectorAll(".category-card");
-  cards.forEach(c => c.classList.remove("dice-roll"));
-
-  // Fix width for consistent export
-  missionBoard.style.width = "700px";
-  missionBoard.style.padding = "20px";
-  missionBoard.style.boxSizing = "border-box";
-
-  // Force redraw to stabilize layout
-  missionBoard.getBoundingClientRect();
-
-  html2canvas(missionBoard, {
-    scale: 0.7,
-    useCORS: true,
-    allowTaint: true
-  }).then(canvas => {
-    const link = document.createElement("a");
-    link.download = "mission.png";
-    link.href = canvas.toDataURL("image/png");
-    link.click();
-
-    // Restore dice-roll animation and layout
-    cards.forEach(c => c.classList.add("dice-roll"));
-    missionBoard.style.width = "";
-    missionBoard.style.padding = "";
-  }).catch(err => {
-    alert("Error exporting PNG: " + err);
-  });
-}
