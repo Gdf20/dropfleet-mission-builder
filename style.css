@@ -1,61 +1,100 @@
-/* Body & background */
+/* ------------------ Body & Background ------------------ */
 body {
   font-family: 'Orbitron', sans-serif, Arial, sans-serif;
-  background: #0b1f3f url('starfield.png') repeat;
-  color: #fff;
+  background: #0a1a2b url('starfield.png') repeat; /* darker blue */
+  color: #e0d8b0; /* darker gold tone for text */
   margin: 0; padding: 0;
   display: flex; flex-direction: column; align-items: center;
 }
 
-/* Header */
-.header { text-align: center; margin: 20px; }
-.header h1 { font-size: 32px; text-shadow: 0 0 10px #ffe966; }
+/* ------------------ Header ------------------ */
+.header {
+  text-align: center; margin: 20px;
+}
+.header h1 {
+  font-size: 32px;
+  text-shadow: 0 0 6px #a38c55; /* darker gold glow */
+}
 
-/* Mode badge */
+/* ------------------ Mode Badge ------------------ */
 .mode-badge {
   display: inline-block; padding: 8px 16px;
-  border-radius: 8px; font-weight: bold;
+  border-radius: 10px; font-weight: bold;
   margin-top: 10px;
   transition: all 0.5s ease;
   text-transform: uppercase; letter-spacing: 1px;
+  box-shadow: 0 0 6px #00000050;
 }
-.badge-casual { background:#0055aa; box-shadow:0 0 15px #ffe966; color:#ffe966;}
-.badge-narrative { background:#0077cc; box-shadow:0 0 15px #ffe966; color:#ffe966;}
-.badge-competitive { background:#003366; box-shadow:0 0 15px #ffe966; color:#ffe966;}
-.badge-standard { background:#005588; box-shadow:0 0 15px #ffe966; color:#ffe966;}
 
-/* Player setup */
-.player-setup { margin:20px; display:flex; flex-wrap:wrap; gap:12px; justify-content:center; }
-.player-setup input { padding:6px 10px; width:150px; border-radius:6px; border:1px solid #ffe966; background:#002244; color:#ffe966;}
-.player-setup button { padding:8px 14px; cursor:pointer; border-radius:6px; background:#004488; color:#ffe966; border:1px solid #ffe966; }
-.player-setup button:hover { background:#ffe966; color:#003366; }
+/* Mode-specific colors */
+.badge-casual { background:#001f3d; color:#c1a159; box-shadow:0 0 12px #c1a159; }
+.badge-narrative { background:#002a55; color:#d1b06c; box-shadow:0 0 12px #d1b06c; }
+.badge-competitive { background:#001229; color:#b07f34; box-shadow:0 0 12px #b07f34; }
+.badge-standard { background:#002038; color:#c19c52; box-shadow:0 0 12px #c19c52; }
 
-/* Mode buttons */
-.mode-buttons { margin: 20px; display:flex; flex-wrap:wrap; gap:12px; justify-content:center; }
-.mode-buttons button { padding:10px 16px; cursor:pointer; border-radius:6px; border:1px solid #ffe966; background:#003366; color:#ffe966; font-weight:bold; }
-.mode-buttons button:hover { background:#ffe966; color:#003366; }
+/* ------------------ Player Setup ------------------ */
+.player-setup {
+  margin:20px;
+  display:flex; flex-wrap:wrap; gap:12px; justify-content:center;
+}
+.player-setup input {
+  padding:6px 10px; width:150px; border-radius:6px;
+  border:1px solid #c19c52; background:#001422; color:#c19c52;
+}
+.player-setup button {
+  padding:8px 14px; cursor:pointer;
+  border-radius:6px; background:#002038; color:#c19c52; border:1px solid #c19c52;
+}
+.player-setup button:hover { background:#c19c52; color:#002038; }
 
-/* Export buttons */
-.export-buttons { margin:20px; display:flex; gap:12px; justify-content:center; }
-.export-buttons button { padding:10px 16px; cursor:pointer; border-radius:6px; border:1px solid #ffe966; background:#003366; color:#ffe966; font-weight:bold; }
-.export-buttons button:hover { background:#ffe966; color:#003366; }
+/* ------------------ Mode Buttons ------------------ */
+.mode-buttons {
+  margin: 20px;
+  display:flex; flex-wrap:wrap; gap:12px; justify-content:center;
+}
+.mode-buttons button {
+  padding:10px 16px; cursor:pointer; border-radius:6px;
+  border:1px solid #c19c52; background:#001422; color:#c19c52; font-weight:bold;
+}
+.mode-buttons button:hover { background:#c19c52; color:#001422; }
 
-/* Export area */
-.export-area { width:95%; max-width:700px; background:#002244; padding:25px; border-radius:12px; margin:20px 0; box-shadow:0 0 25px #004488; }
+/* ------------------ Export Buttons ------------------ */
+.export-buttons {
+  margin:20px; display:flex; gap:12px; justify-content:center;
+}
+.export-buttons button {
+  padding:10px 16px; cursor:pointer; border-radius:6px;
+  border:1px solid #c19c52; background:#001422; color:#c19c52; font-weight:bold;
+}
+.export-buttons button:hover { background:#c19c52; color:#001422; }
 
-/* Category cards */
+/* ------------------ Export Area ------------------ */
+.export-area { 
+  width:95%; max-width:700px; background:#001420; padding:25px; 
+  border-radius:14px; margin:20px 0; box-shadow:0 0 25px #00000070; 
+  display: flex; flex-direction: column; gap:12px; box-sizing: border-box;
+}
+
+/* ------------------ Category Cards ------------------ */
 .category-card {
   display:flex; flex-direction:row; justify-content:space-between; align-items:center;
-  background:linear-gradient(135deg,#003366,#004488);
-  margin:10px 0; padding:16px 20px;
+  background:linear-gradient(135deg,#001422,#002038);
+  margin:8px 0; padding:16px 20px;
   border-radius:12px; width:100%; box-sizing:border-box;
-  box-shadow:0 0 12px #004488 inset,0 0 6px #ffe966;
+  box-shadow:0 0 8px #00000080 inset;
+  transition: all 0.3s ease;
 }
-.category-text { font-size:18px; font-weight:bold; flex:1; padding-left:8px; color:#ffe966; }
-.reroll-btn { padding:6px 14px; cursor:pointer; font-size:16px; border-radius:6px; flex-shrink:0; border:1px solid #ffe966; background:#003366; color:#ffe966; font-weight:bold; }
-.reroll-btn:hover { background:#ffe966; color:#003366; }
+.category-card:hover { box-shadow:0 0 12px #c19c52 inset; }
 
-/* Dice roll animation */
+.category-text { font-size:18px; font-weight:bold; flex:1; padding-left:8px; color:#c19c52; word-wrap: break-word;}
+.reroll-btn {
+  padding:6px 14px; cursor:pointer; font-size:16px;
+  border-radius:6px; flex-shrink:0; border:1px solid #c19c52;
+  background:#001422; color:#c19c52; font-weight:bold;
+}
+.reroll-btn:hover { background:#c19c52; color:#001422; }
+
+/* ------------------ Dice Roll Animation ------------------ */
 @keyframes diceRoll {
   0% { transform: translateX(0px) rotate(0deg);}
   20% { transform: translateX(-5px) rotate(-5deg);}
@@ -64,17 +103,17 @@ body {
   80% { transform: translateX(3px) rotate(3deg);}
   100% { transform: translateX(0px) rotate(0deg);}
 }
-.dice-roll { animation: diceRoll 0.5s ease; }
+.dice-roll { animation: diceRoll 0.4s ease; }
 
-/* Player results */
+/* ------------------ Player Results ------------------ */
 .player-results { margin:15px 0; text-align:center; font-weight:bold; font-size:18px; }
 .red-player { color:#ff5555; }
 .blue-player { color:#55ccff; }
 
-/* Reminder */
-.reminder { font-size:12px; text-align:center; margin-top:12px; color:#ffe966; }
+/* ------------------ Reminder ------------------ */
+.reminder { font-size:12px; text-align:center; margin-top:12px; color:#c19c52; }
 
-/* Responsive adjustments */
+/* ------------------ Responsive ------------------ */
 @media screen and (max-width:700px){
   .category-card { flex-direction:column; align-items:flex-start; }
   .reroll-btn { margin-top:8px; }
