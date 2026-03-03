@@ -1,39 +1,64 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Dropfleet Commander Mission Builder</title>
-<link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <title>DFC Mission Generator</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
+<div class="stars"></div>
 
-<h1>Dropfleet Commander Mission Builder</h1>
+<div class="container">
 
-<div class="button-container">
-    <button onclick="rollCasual()">Casual (1-4)</button>
-    <button onclick="rollComplete()">Complete (1-6)</button>
-    <button onclick="rollCompetitive()">Competitive (Approach 1-3 only)</button>
-    <button onclick="rollStandardScenario()">Standard Scenarios</button>
+  <h1>Dropfleet Commander Mission Generator</h1>
+
+  <div id="modeBadge" class="mode-badge badge-casual">
+    Mode: Casual
+  </div>
+
+  <div class="button-row">
+    <button class="btn-casual" onclick="rollMission('casual')">
+      Casual<br><small>1-4 all categories</small>
+    </button>
+
+    <button class="btn-narrative" onclick="rollMission('narrative')">
+      Casual Narrative<br><small>1-6 all categories</small>
+    </button>
+
+    <button class="btn-competitive" onclick="rollMission('competitive')">
+      Competitive<br><small>Deployments 1-4, Layout 1-3</small>
+    </button>
+
+    <button class="btn-standard" onclick="rollMission('standard')">
+      Standard Scenarios<br><small>Scenario only</small>
+    </button>
+  </div>
+
+  <!-- EXPORT AREA -->
+  <div id="exportArea">
+
+    <div id="results" class="results">
+      <h2>Press a button to generate mission</h2>
+    </div>
+
+    <div class="footer-note">
+      Remember to determine who is the Red player and who is the Blue player before beginning game setup.
+    </div>
+
+  </div>
+  <!-- END EXPORT AREA -->
+
+  <div class="utility-row">
+    <button onclick="copyMission()">Copy Mission</button>
+    <button onclick="exportPNG()">Export to PNG</button>
+  </div>
+
 </div>
 
-<div id="dice-container">
-    <div id="dice" class="dice">🎲</div>
-</div>
-
-<div class="export-container">
-    <button onclick="exportPNG()">Export Mission as PNG</button>
-</div>
-
-<div id="results"></div>
-
-<p id="rules-link">
-    <a href="https://ttcombat.com/pages/dropfleet-commander-downloads" target="_blank">
-        Dropfleet Commander Rules PDF Download
-    </a>
-</p>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
 <script src="script.js"></script>
+
 </body>
 </html>

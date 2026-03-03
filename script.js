@@ -1,148 +1,120 @@
-const data = {
-    Deployment: ["Line","Table Corners","Midboard","From Corners","Attacker Defender","Encirclement"],
-    "Approach Type": ["Standoff","Close Enough","Column","Counterattack","Delayed Response","Home Fleet Disadvantage"],
-    Layouts: ["Diagonal","Edge Case","Eruption","Gatecrash","Moonlight","Moonstruck"],
-    Variants: ["Guarded Sectors","Secure Comms Array","Battlescarred","Gridlocked","Expansive Atmosphere","Orbital Complex"],
-    Objectives: ["Attrition","Survey","Extract","Protect","Breakthrough","Raise"],
-    Scenario: ["Take and Hold","Erupting Battlefront","Power Gate","Shack and Yaw","Orbital Support","Entrapment"]
-};
+const scenarios = [
+  "Domination",
+  "Recon",
+  "Breakthrough",
+  "Vital Intelligence",
+  "Supply Drop",
+  "Invasion"
+];
 
-const rulesPages = {
-    Deployment: "Page 28 of Rules PDF",
-    "Approach Type": "Page 30 of Rules PDF",
-    Layouts: "Page 30 of Rules PDF",
-    Variants: "Page 33 of Rules PDF",
-    Objectives: "Page 34 of Rules PDF",
-    Scenario: "Page 35 of Rules PDF"
-};
+const deployments = [
+  "Standard",
+  "Flank",
+  "Corner",
+  "Diagonal",
+  "Encirclement",
+  "Ambush"
+];
 
-let currentResults = {};
-let currentMode = "";
+const layouts = [
+  "Sparse",
+  "Moderate",
+  "Dense",
+  "Clustered",
+  "Central Mass",
+  "Outer Ring"
+];
 
-// ================= BUTTON FUNCTIONS =================
-function rollCasual(){ currentMode="casual"; rollMission(4,false,false); }
-function rollComplete(){ currentMode="complete"; rollMission(6,false,false); }
-function rollCompetitive(){ currentMode="competitive"; rollMission(6,true,false); }
-function rollStandardScenario(){ currentMode="standard"; rollMission(6,false,true); }
-
-// ================= CORE ROLL FUNCTION =================
-function rollMission(maxRoll, competitiveMode=false, onlyScenario=false){
-    const resultsDiv = document.getElementById("results");
-    const diceDiv = document.getElementById("dice");
-    resultsDiv.innerHTML = "";
-    currentResults = {};
-
-    let ticks = 10;
-    let currentTick = 0;
-
-    const interval = setInterval(() => {
-        const randomRoll = getRandomNumber(maxRoll);
-        diceDiv.textContent = `🎲 ${randomRoll}`;
-        diceDiv.style.transform = `rotate(${Math.random()*360}deg) scale(${1 + Math.random()*0.3})`;
-
-        currentTick++;
-        if(currentTick >= ticks){
-            clearInterval(interval);
-
-            for(let category in data){
-                // Only roll Scenario if this is the Standard Scenario button
-                if(category === "Scenario" && onlyScenario === false) continue;
-
-                // Skip everything else if this is Standard Scenario
-                if(category !== "Scenario" && onlyScenario === true) continue;
-
-                let roll;
-                if(category === "Approach Type" && competitiveMode){
-                    roll = getRandomNumber(3);
-                } else {
-                    roll = getRandomNumber(maxRoll);
-                }
-
-                const result = data[category][roll-1];
-                currentResults[category] = {roll,result};
-
-                resultsDiv.innerHTML += `
-                    <div class="result-row" id="row-${category}">
-                        <span class="result-text"><strong>${category}:</strong> ${roll} - ${result} (${rulesPages[category]})</span>
-                        <button class="reroll-btn" onclick="rerollCategory('${category}')">Reroll</button>
-                    </div>
-                `;
-            }
-
-            diceDiv.textContent = "🎲 Done!";
-            diceDiv.style.transform = "scale(1) rotate(0deg)";
-        }
-    }, 80);
+function random(max) {
+  return Math.floor(Math.random() * max);
 }
 
-// ================= REROLL =================
-function rerollCategory(category){
-    let maxRoll;
-    switch(currentMode){
-        case "casual": maxRoll=4; break;
-        case "complete": maxRoll=6; break;
-        case "competitive": maxRoll=6; 
-            if(category==="Approach Type"){ maxRoll=3 } 
-            break;
-        case "standard": maxRoll=6; break;
-    }
+function setBadge(mode) {
+  const badge = document.getElementById("modeBadge");
+  badge.className = "mode-badge";
 
-    let possible = [];
-    for(let i=1;i<=maxRoll;i++){
-        if(i !== currentResults[category].roll) possible.push(i);
-    }
+  if (mode === "casual") {
+    badge.classList.add("badge-casual");
+    badge.innerText = "Mode: Casual";
+  }
 
-    let newRoll = possible[Math.floor(Math.random()*possible.length)];
-    let newResult = data[category][newRoll-1];
-    currentResults[category] = {roll:newRoll, result:newResult};
+  if (mode === "narrative") {
+    badge.classList.add("badge-narrative");
+    badge.innerText = "Mode: Casual Narrative";
+  }
 
-    const diceDiv = document.getElementById("dice");
-    diceDiv.textContent = `🎲 ${newRoll}`;
-    diceDiv.style.transform = `rotate(${Math.random()*360}deg) scale(${1 + Math.random()*0.3})`;
-    setTimeout(()=>{
-        diceDiv.textContent="🎲 Done!";
-        diceDiv.style.transform="scale(1) rotate(0deg)";
-    }, 400);
+  if (mode === "competitive") {
+    badge.classList.add("badge-competitive");
+    badge.innerText = "Mode: Competitive";
+  }
 
-    const row = document.getElementById(`row-${category}`);
-    if(row){
-        row.querySelector('.result-text').textContent = `${category}: ${newRoll} - ${newResult} (${rulesPages[category]})`;
-    }
+  if (mode === "standard") {
+    badge.classList.add("badge-standard");
+    badge.innerText = "Mode: Standard Scenario";
+  }
 }
 
-// ================= UTIL =================
-function getRandomNumber(max){
-    return Math.floor(Math.random()*max)+1;
+function rollMission(mode) {
+  const results = document.getElementById("results");
+
+  results.classList.remove("roll-animation");
+  void results.offsetWidth;
+  results.classList.add("roll-animation");
+
+  setBadge(mode);
+
+  let scenarioRoll, deploymentRoll, layoutRoll;
+
+  if (mode === "casual") {
+    scenarioRoll = random(4);
+    deploymentRoll = random(4);
+    layoutRoll = random(4);
+  }
+
+  if (mode === "narrative") {
+    scenarioRoll = random(6);
+    deploymentRoll = random(6);
+    layoutRoll = random(6);
+  }
+
+  if (mode === "competitive") {
+    scenarioRoll = random(6);
+    deploymentRoll = random(4);
+    layoutRoll = random(3);
+  }
+
+  if (mode === "standard") {
+    scenarioRoll = random(6);
+    results.innerHTML = `
+      <h2>Scenario</h2>
+      <p>${scenarios[scenarioRoll]}</p>
+    `;
+    return;
+  }
+
+  results.innerHTML = `
+    <h2>Scenario</h2>
+    <p>${scenarios[scenarioRoll]}</p>
+    <h2>Deployment</h2>
+    <p>${deployments[deploymentRoll]}</p>
+    <h2>Cluster Layout</h2>
+    <p>${layouts[layoutRoll]}</p>
+  `;
 }
 
-// ================= PNG EXPORT =================
+function copyMission() {
+  const text = document.getElementById("exportArea").innerText;
+  navigator.clipboard.writeText(text);
+  alert("Mission copied to clipboard!");
+}
+
 function exportPNG() {
-    const resultsDiv = document.getElementById("results");
-    if (resultsDiv.innerHTML.trim() === "") {
-        alert("Please roll a mission first!");
-        return;
-    }
+  const exportArea = document.getElementById("exportArea");
 
-    const clone = resultsDiv.cloneNode(true);
-    clone.querySelectorAll('.reroll-btn').forEach(el => el.remove());
-
-    clone.style.position = "absolute";
-    clone.style.left = "-9999px";
-    clone.style.top = "0";
-    clone.style.width = resultsDiv.offsetWidth + "px";
-    clone.style.pointerEvents = "none"; 
-    document.body.appendChild(clone);
-
-    setTimeout(() => {
-        html2canvas(clone, {backgroundColor:"#0b0f1a", scale:2, useCORS:true}).then(canvas=>{
-            const link = document.createElement("a");
-            link.download = "dropfleet_mission.png";
-            link.href = canvas.toDataURL("image/png");
-            link.click();
-            document.body.removeChild(clone);
-        }).catch(err=>{
-            alert("PNG export failed: "+err);
-            document.body.removeChild(clone);
-        });
-    }, 50);
+  html2canvas(exportArea).then(canvas => {
+    const link = document.createElement("a");
+    link.download = "mission.png";
+    link.href = canvas.toDataURL();
+    link.click();
+  });
 }
